@@ -11,7 +11,7 @@
 @interface NDSDirectionalControl()
 
 @property (readwrite, nonatomic) NDSDirectionalControlDirection direction;
-@property (assign, nonatomic) CGSize deadZone; // dead zone in the middle of the control
+@property (readonly, nonatomic) CGSize deadZone; // dead zone in the middle of the control
 @property (strong, nonatomic) UIImageView *backgroundImageView;
 @property (assign, nonatomic) CGRect deadZoneRect;
 @property (strong, nonatomic) UIImageView *buttonImageView;
@@ -34,12 +34,17 @@
         _buttonImageView.center = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
         [self addSubview:_buttonImageView];
         
-        self.deadZone = CGSizeMake(self.frame.size.width/3, self.frame.size.height/3);
-        
         [self setStyle:NDSDirectionalControlStyleDPad];
     }
     return self;
 }
+
+-(CGSize)deadZone
+{
+    return CGSizeMake(self.frame.size.width/3, self.frame.size.height/3);
+}
+
+
 
 - (NDSDirectionalControlDirection)directionForTouch:(UITouch *)touch
 {

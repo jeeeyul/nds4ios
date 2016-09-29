@@ -189,63 +189,25 @@ const float textureVert[] =
     
     self.fpsLabel.hidden = ![defaults integerForKey:@"showFPS"];
     self.pixelGrid.hidden = ![defaults integerForKey:@"showPixelGrid"];
+    
+    
+    self.controllerContainerView.hidden = [defaults boolForKey:@"hideControlOnStart"];
+    
+    self.dismissButton.alpha = MAX(0.3, [defaults floatForKey:@"controlOpacity"]);
+    self.controllerContainerView.alpha = [defaults floatForKey:@"controlOpacity"];
 }
+
+- (IBAction)toggleControlVisibility:(id)sender {
+    _controllerContainerView.hidden = !_controllerContainerView.hidden;
+}
+
 
 - (void)viewWillLayoutSubviews
 {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    BOOL isLandscape = self.view.bounds.size.width > self.view.bounds.size.height;
-    BOOL isWidescreen = [[UIScreen mainScreen] isWidescreen];
-    
     glkView[0].frame = [self rectForScreenView:0];
     glkView[1].frame = [self rectForScreenView:1];
     self.snapshotView.frame = glkView[extWindow?1:0].frame;
-    if (isLandscape) {
-        self.dismissButton.frame = CGRectMake((self.view.bounds.size.width + self.view.bounds.size.height/1.5)/2 + 8, 8, 28, 28);
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
-        {
-            self.controllerContainerView.frame = self.view.bounds;
-            self.directionalControl.center = CGPointMake(66, self.view.bounds.size.height-128);
-            self.buttonControl.center = CGPointMake(self.view.bounds.size.width-66, self.view.bounds.size.height-128);
-            self.startButton.center = CGPointMake(self.view.bounds.size.width-102, self.view.bounds.size.height-48);
-            self.selectButton.center = CGPointMake(self.view.bounds.size.width-102, self.view.bounds.size.height-16);
-            self.fastForwardButton.center = CGPointMake(102, self.view.bounds.size.height-16);
-            self.controllerContainerView.alpha = self.dismissButton.alpha = 1.0;
-            self.fpsLabel.frame = CGRectMake(70, 0, 70, 24);
-        } else if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
-        {
-            self.controllerContainerView.frame = CGRectMake(0, (self.view.bounds.size.height/2)-150, self.view.bounds.size.width, 300);
-            self.directionalControl.center = CGPointMake(66, 150);
-            self.buttonControl.center = CGPointMake(self.view.bounds.size.width-66, 150);
-            self.startButton.center = CGPointMake(self.view.bounds.size.width-102, 258);
-            self.selectButton.center = CGPointMake(self.view.bounds.size.width-102, 226);
-            self.fastForwardButton.center = CGPointMake(102, 258);
-            self.controllerContainerView.alpha = self.dismissButton.alpha = 1.0;
-            self.fpsLabel.frame = CGRectMake(185, 5, 70, 24);
-        }
-        if ([UIScreen screens].count > 1) self.controllerContainerView.alpha = self.dismissButton.alpha = MAX(0.1, [defaults floatForKey:@"controlOpacity"]);
-    } else {
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
-        {
-            self.controllerContainerView.frame = CGRectMake(0, [defaults integerForKey:@"controlPosition"] == 0 ? 0 : 240 + (88 * isWidescreen), self.view.bounds.size.width, 240);
-            self.startButton.center = CGPointMake((self.view.bounds.size.width/2)-40, 228);
-            self.selectButton.center = CGPointMake((self.view.bounds.size.width/2)+40, 228);
-            self.fastForwardButton.center = CGPointMake((self.view.bounds.size.width/2), 198);
-            self.dismissButton.frame = CGRectMake((self.view.bounds.size.width/2)-14, 0, 28, 28);
-        } else if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
-        {
-            self.controllerContainerView.frame = CGRectMake(0, [defaults integerForKey:@"controlPosition"] == 0? 230 : 660 + (88 * isWidescreen), self.view.bounds.size.width, 360);
-            self.startButton.center = CGPointMake(25, 300);
-            self.selectButton.center = CGPointMake(self.view.bounds.size.width-25, 300);
-            self.fastForwardButton.center = CGPointMake((self.view.bounds.size.width-25), 270);
-            self.dismissButton.frame = CGRectMake(self.view.bounds.size.width-35, 5, 28, 28);
-        }
-        self.directionalControl.center = CGPointMake(60, 172);
-        self.buttonControl.center = CGPointMake(self.view.bounds.size.width-60, 172);
-        self.dismissButton.alpha = MAX(0.3, [defaults floatForKey:@"controlOpacity"]);
-        self.controllerContainerView.alpha = [defaults floatForKey:@"controlOpacity"];
-        self.fpsLabel.frame = CGRectMake(6, 0, 70, 24);
-    }
+    
 }
 
 - (CGRect)rectForScreenView:(NSInteger)screen
@@ -284,7 +246,7 @@ const float textureVert[] =
 - (void)loadROM {
     EMU_setWorkingDir([[self.game.path stringByDeletingLastPathComponent] fileSystemRepresentation]);
     EMU_init([NDSGame preferredLanguage]);
-    EMU_setCPUMode([[NSUserDefaults standardUserDefaults] boolForKey:@"enableLightningJIT"] ? 2 : 1);
+    EMU_setCPUMode(1);
     EMU_loadRom([self.game.path fileSystemRepresentation]);
     EMU_change3D(1);
         

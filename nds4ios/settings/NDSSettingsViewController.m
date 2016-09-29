@@ -28,12 +28,12 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *controlPadStyleControl;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *controlPositionControl;
 @property (weak, nonatomic) IBOutlet UISlider *controlOpacitySlider;
+@property (weak, nonatomic) IBOutlet UILabel *hideControlLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *hideControlSwitch;
 
 @property (weak, nonatomic) IBOutlet UILabel *showFPSLabel;
-@property (weak, nonatomic) IBOutlet UILabel *showPixelGridLabel;
 
 @property (weak, nonatomic) IBOutlet UISwitch *showFPSSwitch;
-@property (weak, nonatomic) IBOutlet UISwitch *showPixelGridSwitch;
 
 @property (weak, nonatomic) IBOutlet UISwitch *enableJITSwitch;
 
@@ -71,7 +71,6 @@
     
     self.frameSkipLabel.text = NSLocalizedString(@"Frame Skip", nil);
     self.disableSoundLabel.text = NSLocalizedString(@"Disable Sound", nil);
-    self.showPixelGridLabel.text = NSLocalizedString(@"Overlay Pixel Grid", nil);
 
     self.controlPadStyleLabel.text = NSLocalizedString(@"Control Pad Style", nil);
     self.controlPositionLabel.text = NSLocalizedString(@"Controls Position (Portrait)", nil);
@@ -167,8 +166,6 @@
         [defaults setInteger:frameSkip forKey:@"frameSkip"];
     } else if (sender == self.disableSoundSwitch) {
         [defaults setBool:self.disableSoundSwitch.on forKey:@"disableSound"];
-    } else if (sender == self.showPixelGridSwitch) {
-        [defaults setBool:self.showPixelGridSwitch.on forKey:@"showPixelGrid"];
     } else if (sender == self.controlPadStyleControl) {
         [defaults setInteger:self.controlPadStyleControl.selectedSegmentIndex forKey:@"controlPadStyle"];
     } else if (sender == self.controlPositionControl) {
@@ -181,7 +178,11 @@
         [defaults setBool:self.enableJITSwitch.on forKey:@"enableLightningJIT"];
     } else if (sender == self.vibrateSwitch) {
         [defaults setBool:self.vibrateSwitch.on forKey:@"vibrate"];
-    } else if (sender == self.dropboxSwitch) {//i'll use a better more foolproof method later. <- lol yeah right
+    } else if(sender == _hideControlSwitch){
+        [defaults setBool:_hideControlSwitch.on forKey:@"hideControlOnStart"];
+    }
+    
+    else if (sender == self.dropboxSwitch) {//i'll use a better more foolproof method later. <- lol yeah right
         if ([defaults boolForKey:@"enableDropbox"] == false) {
             [[DBSession sharedSession] linkFromController:self];
         } else {
@@ -212,9 +213,10 @@
     self.controlPadStyleControl.selectedSegmentIndex = [defaults integerForKey:@"controlPadStyle"];
     self.controlPositionControl.selectedSegmentIndex = [defaults integerForKey:@"controlPosition"];
     self.controlOpacitySlider.value = [defaults floatForKey:@"controlOpacity"];
+    self.hideControlSwitch.on = [defaults boolForKey:@"hideControlOnStart"];
     
     self.showFPSSwitch.on = [defaults boolForKey:@"showFPS"];
-    self.showPixelGridSwitch.on = [defaults boolForKey:@"showPixelGrid"];
+    
     
     self.enableJITSwitch.on = [defaults boolForKey:@"enableLightningJIT"];
     self.vibrateSwitch.on = [defaults boolForKey:@"vibrate"];

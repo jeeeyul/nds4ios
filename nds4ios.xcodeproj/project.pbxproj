@@ -1720,7 +1720,7 @@
 					"\"$(SRCROOT)/nds4ios/dropbox\"",
 					"\"$(SRCROOT)/nds4ios/Reveal\"",
 				);
-				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nds4ios/support/nds4ios-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -1735,6 +1735,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = me.totlol.tmp.nds4ios;
 				PRODUCT_NAME = nds4ios;
 				PROVISIONING_PROFILE = "";
+				STRIP_INSTALLED_PRODUCT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1758,7 +1759,7 @@
 					"\"$(SRCROOT)/nds4ios/dropbox\"",
 					"\"$(SRCROOT)/nds4ios/Reveal\"",
 				);
-				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_OPTIMIZATION_LEVEL = fast;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nds4ios/support/nds4ios-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
