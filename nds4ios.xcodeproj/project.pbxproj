@@ -1312,7 +1312,7 @@
 				ORGANIZATIONNAME = InfiniDev;
 				TargetAttributes = {
 					BFCFE0EE1764FBD3000A70CF = {
-						DevelopmentTeam = 9UHQLN2HJH;
+						DevelopmentTeam = G3PJULAVW9;
 					};
 				};
 			};
@@ -1710,6 +1710,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = G3PJULAVW9;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1747,6 +1748,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = G3PJULAVW9;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

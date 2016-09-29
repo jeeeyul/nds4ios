@@ -214,7 +214,14 @@ NSString * const NDSGameSaveStatesChangedNotification = @"NDSGameSaveStatesChang
 - (NSString*)nameOfSaveStateAtIndex:(NSInteger)idx
 {
     if (idx < 0 || idx >= saveStates.count) return nil;
-    return [[saveStates[idx] substringFromIndex:self.path.lastPathComponent.stringByDeletingPathExtension.length+1] stringByDeletingPathExtension];
+    
+    NSString* fileName =  [[saveStates[idx] substringFromIndex:self.path.lastPathComponent.stringByDeletingPathExtension.length+1] stringByDeletingPathExtension];
+    
+    if([fileName hasPrefix:@"auto-"]){
+        fileName = NSLocalizedString(@"Auto Save", @"자동 저장");
+    }
+    
+    return fileName;
 }
 
 - (NSDate*)dateOfSaveStateAtIndex:(NSInteger)idx

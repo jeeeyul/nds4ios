@@ -76,6 +76,7 @@
     self.controlPadStyleLabel.text = NSLocalizedString(@"Control Pad Style", nil);
     self.controlPositionLabel.text = NSLocalizedString(@"Controls Position (Portrait)", nil);
     self.controlOpacityLabel.text = NSLocalizedString(@"Control Opacity (Portrait)", nil);
+    _controlOpacitySlider.minimumValue = 0.0f;
     
     self.dropboxLabel.text = NSLocalizedString(@"Enable Dropbox Sync", nil);
     self.accountLabel.text = NSLocalizedString(@"Not Linked", nil);

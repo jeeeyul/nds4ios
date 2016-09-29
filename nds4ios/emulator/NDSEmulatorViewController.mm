@@ -242,7 +242,8 @@ const float textureVert[] =
         }
         self.directionalControl.center = CGPointMake(60, 172);
         self.buttonControl.center = CGPointMake(self.view.bounds.size.width-60, 172);
-        self.controllerContainerView.alpha = self.dismissButton.alpha = MAX(0.1, [defaults floatForKey:@"controlOpacity"]);
+        self.dismissButton.alpha = MAX(0.3, [defaults floatForKey:@"controlOpacity"]);
+        self.controllerContainerView.alpha = [defaults floatForKey:@"controlOpacity"];
         self.fpsLabel.frame = CGRectMake(6, 0, 70, 24);
     }
 }
