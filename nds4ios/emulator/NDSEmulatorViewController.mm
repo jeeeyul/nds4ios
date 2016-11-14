@@ -128,8 +128,8 @@ const float textureVert[] =
     self.view.multipleTouchEnabled = YES;
     
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    [notificationCenter addObserver:self selector:@selector(willBackground) name:UIApplicationWillResignActiveNotification object:nil];
-    [notificationCenter addObserver:self selector:@selector(resumeEmulationWithDelay) name:UIApplicationDidBecomeActiveNotification object:nil];
+    [notificationCenter addObserver:self selector:@selector(willBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [notificationCenter addObserver:self selector:@selector(resumeEmulationWithDelay) name:UIApplicationWillEnterForegroundNotification object:nil];
     [notificationCenter addObserver:self selector:@selector(defaultsChanged:) name:NSUserDefaultsDidChangeNotification object:nil];
     [notificationCenter addObserver:self selector:@selector(screenChanged:) name:UIScreenDidConnectNotification object:nil];
     [notificationCenter addObserver:self selector:@selector(screenChanged:) name:UIScreenDidDisconnectNotification object:nil];
@@ -369,14 +369,6 @@ const float textureVert[] =
 - (void)pauseEmulation
 {
     if (!execute) return;
-    // save snapshot of screen
-    if (self.snapshotView == nil) {
-        self.snapshotView = [[UIImageView alloc] initWithFrame:glkView[extWindow?1:0].frame];
-        [self.view insertSubview:self.snapshotView aboveSubview:glkView[extWindow?1:0]];
-    } else {
-        self.snapshotView.hidden = NO;
-    }
-    self.snapshotView.image = [self screenSnapshot:extWindow?1:-1];
     
     // pause emulation
     EMU_pause(true);
@@ -394,8 +386,6 @@ const float textureVert[] =
 {
     if (self.presentingViewController.presentedViewController != self) return;
     if (execute) return;
-    // remove snapshot
-    self.snapshotView.hidden = YES;
     
     // resume emulation
     [self initGL];
